@@ -6,6 +6,7 @@
 
 namespace num2word{
 
+template<typename T = int>
 class  numword
 {
 private:
@@ -15,16 +16,17 @@ private:
     bool is_digits() const;  
     
 public:
-     numword(std::string in);
-     numword(const char* in);
-     numword(uint64_t in = 0);
+     explicit numword(T in = 0);
+     
      bool parseNum();
      std::string getNum() const;
     ~ numword() = default;
 };
 
-std::ostream& operator<<(std::ostream& o, const numword& n);
+template<typename T>
+std::ostream& operator<<(std::ostream& o, const numword<T>& n);
 
 }
+#include"numword.inl"
 
 #endif

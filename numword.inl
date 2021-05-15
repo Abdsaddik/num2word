@@ -27,9 +27,17 @@ static std::string cpy;
 // this is needed to know which digit power we have, for example to know if it is hundred thousand, hundred million or only hundred
 static std::string dgtVal;
 
-numword::numword(std::string in)  : input_(in){}
-numword::numword(const char* in)  : input_(std::string(in)){}
-numword::numword(uint64_t in) : input_(std::to_string(in)){}
+template<typename T>
+numword<T>::numword(T in) : input_(std::to_string(in)){}
+
+template<>
+numword<const char*>::numword(const char* in)  : input_(in) {}
+
+template<>
+numword<std::string>::numword(std::string in)  : input_(in) {}
+
+template<>
+numword<char*>::numword(char* in)  : input_(in) {}
 
 std::string oneDgt(std::string str) {
     return ones[str[0] - '0'];
@@ -49,7 +57,7 @@ std::string ThrDgt(std::string str) {
     case 3:
         if(!(str[0]-'0')) {return twoDgt(str.substr(1,2));}
         else if(!(str[1]-'0') && !(str[2]-'0')) return ones[str[0]-'0'] + hundred;
-        else return ones[str[0]-'0'] + hundred + num2word::twoDgt(str.substr(1,2));
+        else return ones[str[0]-'0'] + hundred + twoDgt(str.substr(1,2));
     case 2:
         return twoDgt(str);
     case 1:
@@ -86,7 +94,8 @@ void clnVal(){
 }
 
 // primary methode which parses the nums and converts them to their equivalent strings
-bool numword::parseNum() {
+template<typename T>
+bool numword<T>::parseNum() {
     ans = "";
     size_ = input_.size();
     cpy = input_;
@@ -113,16 +122,19 @@ bool numword::parseNum() {
     return true;      
 }
 
-bool numword::is_digits() const
+template<typename T>
+bool numword<T>::is_digits() const
 {
     return std::all_of(input_.begin(), input_.end(), isdigit); 
 }
 
-std::string numword::getNum() const{
+template<typename T>
+std::string numword<T>::getNum() const{
     return ans;
 }
 
-std::ostream& operator<<(std::ostream& o, const numword& n){
+template<typename T>
+std::ostream& operator<<(std::ostream& o, const numword<T>& n){
     return o << n.getNum(); 
 }
 }

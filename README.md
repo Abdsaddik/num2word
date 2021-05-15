@@ -1,6 +1,6 @@
 # num2word
 This program converts an integer to its equivalent string value. For example **1** is converted to **one** and so on. Maximum allowed number is 15 digit number. Negative numbers are not supported. 
-The number can be passed as normal integer or even long long int, standard string **std::string** or as c-string "const char*".  
+The number can be passed as an int, standard string **std::string**, pointer to a string of char's, or as c-string "const char*". 
 ## Example
 the number 3,548,975,114 is outputed as follows in terminal 
 ```
@@ -14,6 +14,7 @@ g++ -Wall -std=c++11 -o numword *.cpp && numword
 ```
 typical terminal output should be as the following:
 ```
+num is: one thousand
 num is: zero
 num is: nine hundred ninety-nine trillion nine hundred ninety-nine billion nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine
 num is: one hundred thousand
